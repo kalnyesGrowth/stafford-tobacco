@@ -8,7 +8,10 @@
   <meta property="og:title" content="Stafford Tobacco LLC | Premium Cigars, Vapes & Lounge">
   <meta property="og:description" content="Stafford VA's premier tobacco shop and cigar lounge. Walk-in humidor, premium cigars, vapes, hookah. 4.6 stars. Two locations.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="poster.jpg">
+  <meta property="og:image" content="https://kalnyesgrowth.github.io/stafford-tobacco/poster.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Stafford Tobacco LLC | Premium Cigars, Vapes & Lounge">
+  <meta name="twitter:image" content="https://kalnyesgrowth.github.io/stafford-tobacco/poster.jpg">
   <link rel="canonical" href="https://kalnyesgrowth.github.io/stafford-tobacco/">
   <link href="https://api.fontshare.com/v2/css?f[]=zodiak@400,500,600,700&f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
   <script type="application/ld+json">
@@ -17,7 +20,7 @@
     "@type": "TobaccoStore",
     "name": "Stafford Tobacco LLC",
     "alternateName": "Stafford Tobacco & Cigar Lounge",
-    "image": "poster.jpg",
+    "image": "https://kalnyesgrowth.github.io/stafford-tobacco/poster.jpg",
     "url": "https://kalnyesgrowth.github.io/stafford-tobacco/",
     "telephone": "+15402882459",
     "address": {
@@ -49,6 +52,27 @@
       "https://www.instagram.com/staffordtobacco115/",
       "https://www.facebook.com/p/Stafford-Tobacco-Cigar-100062944646222/"
     ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "TobaccoStore",
+    "name": "Stafford Tobacco & Vape",
+    "image": "https://kalnyesgrowth.github.io/stafford-tobacco/poster.jpg",
+    "telephone": "+15407790865",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "296 Garrisonville Rd, Suite 101",
+      "addressLocality": "Stafford",
+      "addressRegion": "VA",
+      "postalCode": "22556",
+      "addressCountry": "US"
+    },
+    "openingHoursSpecification": [
+      {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], "opens": "10:00", "closes": "20:00"},
+      {"@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "11:00", "closes": "18:00"}
+    ],
+    "priceRange": "$$",
+    "paymentAccepted": "Cash, Credit Card, Apple Pay"
   }]
   </script>
   <style>
@@ -280,7 +304,7 @@
       .trust-item { flex-direction: column; gap: 0; text-align: center; flex: 1; min-width: 0; padding: 0 6px; position: relative; }
       .trust-item + .trust-item::before { content: ''; position: absolute; left: 0; top: 20%; height: 60%; width: 1px; background: rgba(200,152,62,0.15); }
       .trust-icon { display: none; }
-      .trust-text { font-size: 0.58rem; line-height: 1.2; color: rgba(255,255,255,0.45); }
+      .trust-text { font-size: 0.58rem; line-height: 1.2; color: rgba(255,255,255,0.45); white-space: nowrap; }
       .trust-text strong { font-size: 0.72rem; font-weight: 600; color: var(--accent); white-space: nowrap; margin-bottom: 1px; }
     }
 
@@ -438,6 +462,7 @@
       font-family: var(--font-heading); font-size: var(--text-lg);
       color: var(--white); cursor: pointer; display: flex;
       justify-content: space-between; align-items: center;
+      background: none; border: none; width: 100%; text-align: left; padding: 0;
     }
     .faq-q::after {
       content: '+'; font-family: var(--font-body); font-size: var(--text-xl);
@@ -856,23 +881,23 @@
       <h2 class="section-title">Frequently <em>Asked</em></h2>
       <div class="faq-list">
         <div class="faq-item">
-          <div class="faq-q" onclick="this.parentElement.classList.toggle('open');">Do I need to be 21 to enter?</div>
+          <button class="faq-q" type="button" onclick="this.parentElement.classList.toggle('open'); this.setAttribute('aria-expanded', this.parentElement.classList.contains('open'));" aria-expanded="false">Do I need to be 21 to enter?</button>
           <div class="faq-a">Yes. Virginia state law requires all customers to be 21 years or older to purchase tobacco, vape, and related products. We check ID at the door.</div>
         </div>
         <div class="faq-item">
-          <div class="faq-q" onclick="this.parentElement.classList.toggle('open');">What payment methods do you accept?</div>
+          <button class="faq-q" type="button" onclick="this.parentElement.classList.toggle('open'); this.setAttribute('aria-expanded', this.parentElement.classList.contains('open'));" aria-expanded="false">What payment methods do you accept?</button>
           <div class="faq-a">We accept cash, all major credit and debit cards, and Apple Pay at both locations.</div>
         </div>
         <div class="faq-item">
-          <div class="faq-q" onclick="this.parentElement.classList.toggle('open');">Can I walk into the humidor?</div>
+          <button class="faq-q" type="button" onclick="this.parentElement.classList.toggle('open'); this.setAttribute('aria-expanded', this.parentElement.classList.contains('open'));" aria-expanded="false">Can I walk into the humidor?</button>
           <div class="faq-a">Absolutely. Our walk-in humidor is open to all customers. Feel free to browse, pick up cigars, and ask our staff for recommendations.</div>
         </div>
         <div class="faq-item">
-          <div class="faq-q" onclick="this.parentElement.classList.toggle('open');">Is the lounge open to everyone?</div>
+          <button class="faq-q" type="button" onclick="this.parentElement.classList.toggle('open'); this.setAttribute('aria-expanded', this.parentElement.classList.contains('open'));" aria-expanded="false">Is the lounge open to everyone?</button>
           <div class="faq-a">Yes. The cigar lounge is available to all customers at no additional charge. No membership or reservation required. Just grab a seat.</div>
         </div>
         <div class="faq-item">
-          <div class="faq-q" onclick="this.parentElement.classList.toggle('open');">Do you offer a military discount?</div>
+          <button class="faq-q" type="button" onclick="this.parentElement.classList.toggle('open'); this.setAttribute('aria-expanded', this.parentElement.classList.contains('open'));" aria-expanded="false">Do you offer a military discount?</button>
           <div class="faq-a">Our Garrisonville Rd location offers a military discount. Please ask staff for details and bring a valid military ID.</div>
         </div>
       </div>
@@ -997,9 +1022,7 @@
           draw();
           var poster = document.querySelector('.hero-poster');
           if (poster) poster.style.opacity = '0';
-        }).catch(function() {
-          draw();
-        });
+        }).catch(function() {});
       });
 
       video.load();
