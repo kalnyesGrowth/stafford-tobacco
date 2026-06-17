@@ -1140,6 +1140,8 @@
 
       function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.shadowColor = 'rgba(200, 195, 185, 0.3)';
+        ctx.shadowBlur = 20;
         for (var i = 0; i < particles.length; i++) {
           var p = particles[i];
           var alpha = p.opacity * p.life * scrollProgress;
@@ -1149,6 +1151,7 @@
           ctx.fillStyle = 'rgba(200, 195, 185, ' + alpha + ')';
           ctx.fill();
         }
+        ctx.shadowBlur = 0;
       }
 
       function loop() {
