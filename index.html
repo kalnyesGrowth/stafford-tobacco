@@ -424,7 +424,7 @@
     @media (max-width: 768px) { .locations-grid { grid-template-columns: 1fr; } }
 
     /* PROCESS / TIMELINE */
-    #process { background: var(--dark2); }
+    #process { background: var(--dark2); position: relative; overflow: hidden; }
     .timeline { position: relative; max-width: 600px; margin: 0 auto; padding-left: 40px; }
     .timeline::before {
       content: ''; position: absolute; left: 15px; top: 0;
@@ -451,6 +451,13 @@
       color: var(--accent); font-weight: 700; letter-spacing: 0.1em;
       text-transform: uppercase; margin-bottom: 4px;
     }
+
+    /* SMOKE CANVAS */
+    #smoke-canvas {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 1;
+    }
+    #process .container { position: relative; z-index: 2; }
 
     /* FAQ */
     #faq { background: var(--bg); }
@@ -841,6 +848,7 @@
 
   <!-- PROCESS -->
   <section id="process">
+    <canvas id="smoke-canvas"></canvas>
     <div class="container">
       <p class="section-label">How It Works</p>
       <h2 class="section-title">Your First <em>Visit</em></h2>
@@ -1067,6 +1075,104 @@
         if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
       });
     });
+
+    // SMOKE PARTICLE SYSTEM
+    (function() {
+      var canvas = document.getElementById('smoke-canvas');
+      var section = document.getElementById('process');
+      var timelineEl = document.getElementById('timeline');
+      if (!canvas || !section || !timelineEl) return;
+      var ctx = canvas.getContext('2d');
+      var particles = [];
+      var maxParticles = window.innerWidth < 768 ? 40 : 80;
+      var scrollProgress = 0;
+      var isVisible = false;
+      var raf;
+
+      function resize() {
+        canvas.width = section.offsetWidth;
+        canvas.height = section.offsetHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      function getTimelineX() {
+        var rect = timelineEl.getBoundingClientRect();
+        var secRect = section.getBoundingClientRect();
+        return rect.left - secRect.left + 15;
+      }
+
+      function Particle(x, y, progress) {
+        this.x = x;
+        this.y = y;
+        this.vx = (Math.random() - 0.5) * (1.5 + progress * 2.5);
+        this.vy = -(0.3 + Math.random() * 0.8);
+        this.life = 1.0;
+        this.decay = 0.004 + Math.random() * 0.008;
+        this.size = (4 + Math.random() * 8) * (0.6 + progress * 0.6);
+        this.opacity = 0.08 + Math.random() * 0.12;
+      }
+
+      function spawnParticles() {
+        if (scrollProgress <= 0) return;
+        var count = Math.ceil(scrollProgress * 3);
+        var lineX = getTimelineX();
+        var sectionH = section.offsetHeight;
+        for (var i = 0; i < count; i++) {
+          if (particles.length >= maxParticles) break;
+          var spawnY = sectionH * (0.1 + Math.random() * 0.8 * scrollProgress);
+          var offsetX = (Math.random() - 0.5) * 20;
+          particles.push(new Particle(lineX + offsetX, spawnY, scrollProgress));
+        }
+      }
+
+      function update() {
+        for (var i = particles.length - 1; i >= 0; i--) {
+          var p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vx *= 0.995;
+          p.life -= p.decay;
+          p.size += 0.15;
+          if (p.life <= 0) { particles.splice(i, 1); }
+        }
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (var i = 0; i < particles.length; i++) {
+          var p = particles[i];
+          var alpha = p.opacity * p.life * scrollProgress;
+          if (alpha < 0.005) continue;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(200, 195, 185, ' + alpha + ')';
+          ctx.fill();
+        }
+      }
+
+      function loop() {
+        if (!isVisible) { raf = requestAnimationFrame(loop); return; }
+        spawnParticles();
+        update();
+        draw();
+        raf = requestAnimationFrame(loop);
+      }
+
+      function onScroll() {
+        var rect = section.getBoundingClientRect();
+        var winH = window.innerHeight;
+        if (rect.bottom < 0 || rect.top > winH) { isVisible = false; return; }
+        isVisible = true;
+        var visible = Math.min(winH, rect.bottom) - Math.max(0, rect.top);
+        var totalH = rect.height;
+        scrollProgress = Math.max(0, Math.min(1, 1 - (rect.bottom - winH) / totalH));
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+      loop();
+    })();
   </script>
 </body>
 </html>
